@@ -196,9 +196,12 @@ class Vehicle:
                 # get inputs from memory
                 inputs = self.mem.get(entry['inputs'])
                 # run the part
+                
                 if entry.get('thread'):
+                    #print('thread part',p)
                     outputs = p.run_threaded(*inputs)
                 else:
+                    #print('part',p)
                     outputs = p.run(*inputs)
 
                 # save the output to memory

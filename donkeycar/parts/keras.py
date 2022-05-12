@@ -86,6 +86,7 @@ class KerasPilot(ABC):
                             state vector in the Behavioural model
         :return:            tuple of (angle, throttle)
         """
+        #print('img_arr',img_arr.shape)
         norm_arr = normalize_image(img_arr)
         return self.inference(norm_arr, other_arr)
 
@@ -306,6 +307,7 @@ class KerasLinear(KerasPilot):
         outputs = self.model.predict(img_arr)
         steering = outputs[0]
         throttle = outputs[1]
+        #print('steering throttle',steering,'   ',throttle)
         return steering[0][0], throttle[0][0]
 
     def y_transform(self, record: TubRecord):

@@ -1,0 +1,6 @@
+sudo cp ominibot_car.rules /etc/udev/rules.d
+service udev reload
+service udev restart
+sudo udevadm control --reload-rules
+sudo udevadm trigger
+

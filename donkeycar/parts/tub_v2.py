@@ -110,6 +110,7 @@ class TubWriter(object):
     def __init__(self, base_path, inputs=[], types=[], metadata=[],
                  max_catalog_len=1000):
         self.tub = Tub(base_path, inputs, types, metadata, max_catalog_len)
+        
 
     def run(self, *args):
         assert len(self.tub.inputs) == len(args), \

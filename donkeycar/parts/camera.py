@@ -151,9 +151,11 @@ class CSICamera(BaseCamera):
         self.capture_width = capture_width
         self.capture_height = capture_height
         self.framerate = framerate
+        self.init_camera()
 
     def init_camera(self):
         import cv2
+        #print('====================================================================================================================================================================================')
 
         # initialize the camera and stream
         self.camera = cv2.VideoCapture(
@@ -165,13 +167,17 @@ class CSICamera(BaseCamera):
                 framerate=self.framerate,
                 flip_method=self.flip_method),
             cv2.CAP_GSTREAMER)
-
         self.poll_camera()
         print('CSICamera loaded.. .warming camera')
         time.sleep(2)
+        '''for i in range(20):
+            self.poll_camera()
+        cv2.imshow('ddd',self.frame)
+        cv2.waitKey(0)'''
         
     def update(self):
-        self.init_camera()
+        #print('2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222')
+        #self.init_camera()
         while self.running:
             self.poll_camera()
 
@@ -182,9 +188,11 @@ class CSICamera(BaseCamera):
 
     def run(self):
         self.poll_camera()
+        #print(self.frame.shape)
         return self.frame
 
     def run_threaded(self):
+        print(self.frame.shape)
         return self.frame
     
     def shutdown(self):
