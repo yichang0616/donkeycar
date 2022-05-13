@@ -30,6 +30,12 @@ class ominibot:
           speed: 
           
         """
+        from donkeycar.parts.ominibot_car_com import OminibotCar,threading,sys
+        _port = "/dev/ominibot_car"
+        _baud = 115200
+        ominibot  = OminibotCar(_port,_baud)
+        ominibot.set_system_mode(platform="individual_wheel")
+        print('angle',angle)
         aaa=50
         sss=0.4
         if speed > 0 and angle<sss and angle>-sss:
