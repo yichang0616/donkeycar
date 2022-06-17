@@ -12,7 +12,7 @@ from typing import Tuple
 import donkeycar as dk
 from donkeycar.parts.pins import OutputPin, PwmPin, PinState
 from donkeycar.utilities.deprecated import deprecated
-
+from donkeycar.parts.ominibot_car_com import OminibotCar,threading,sys
 logger = logging.getLogger(__name__)
 
 
@@ -40,6 +40,61 @@ logger = logging.getLogger(__name__)
 #   on your hardware and perhaps your strategy (you may not want to go too fast, 
 #   and so you may choose is low max throttle pwm)
 #
+
+class ominibot:
+    from donkeycar.parts.ominibot_car_com import OminibotCar,threading,sys
+    from donkeycar.parts.web_controller.web import LocalWebController
+    _port = "/dev/ttyUSB0"
+    _baud = 115200
+    ominibot  = OminibotCar(_port,_baud)
+    def __init__(self):
+
+      _port = "/dev/ttyUSB0"
+      _baud = 115200
+      ominibot  = OminibotCar(_port,_baud)
+      
+    def run(self, angle, speed):
+        """
+        v1,v3 left
+        v2,v4 right
+        """
+        from donkeycar.parts.ominibot_car_com import OminibotCar,threading,sys
+        _port = "/dev/ttyUSB0"
+        _baud = 115200
+        ominibot  = OminibotCar(_port,_baud)
+        ominibot.set_system_mode(platform="individual_wheel")
+        print('angle',angle)
+        
+        
+        a=50
+        limit_low=0.25
+        limit_high=0.8
+        g=1
+        c=20
+        if speed>0:
+          if angle < limit_low and angle > -limit_low:
+              ominibot.individual_wheel(V1=a,V3=a,V2=a,V4=a, debug=False)
+               
+              
+          elif angle > limit_low:
+              b=angle*(100-c)*g
+              if b > 100:
+                b=100-c
+              else:
+                pass
+              ominibot.individual_wheel(V1=c,V3=c,V2=c+b,V4=c+b, debug=False)  
+               
+              
+          elif angle < -limit_low:  
+              b=angle*(100-c)*-g
+              if b > 100:
+                b=100-c
+              else:
+                pass
+              ominibot.individual_wheel(V1=c+b,V3=c+b,V2=c,V4=c, debug=False) 
+              
+        else:
+            ominibot.individual_wheel(V1=0,V3=0,V2=0,V4=0, debug=False) 
 
 def duty_cycle(pulse_ms:float, frequency_hz:float) -> float:
     """

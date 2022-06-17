@@ -1630,10 +1630,10 @@ class JoyStickPub(object):
     '''
     Use Zero Message Queue (zmq) to publish the control messages from a local joystick
     '''
-    def __init__(self, port = 5556, dev_fn='/dev/input/js1'):
+    def __init__(self, port = 5556, dev_fn='/dev/input/js0'):
         import zmq
         self.dev_fn = dev_fn
-        self.js = PS3JoystickPC(self.dev_fn)
+        self.js = XboxOneJoystick(self.dev_fn)
         self.js.init()
         context = zmq.Context()
         self.socket = context.socket(zmq.PUB)
@@ -1653,6 +1653,7 @@ class JoyStickPub(object):
                 message_data = (button, button_state, axis, axis_val)
                 self.socket.send_string( "%s %d %s %f" % message_data)
                 logger.info(f"SENT {message_data}")
+                return message_data
 
 
 class JoyStickSub(object):
